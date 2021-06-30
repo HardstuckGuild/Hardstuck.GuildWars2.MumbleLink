@@ -92,17 +92,23 @@ namespace Hardstuck.GuildWars2.MumbleLink
         /// </summary>
         public void Update()
         {
-            unsafe
+            if (!_Disposed)
             {
-                // read shared memory block, copy into buffer
-                var buffer = new byte[_FileStream.Length];
-                _FileStream.Read(buffer, 0, buffer.Length);
+                _FileStream.Position = 0; // reset read position
 
-                fixed (byte* ptr = &buffer[0])
+                unsafe
                 {
-                    Data = (LinkedMem)Marshal.PtrToStructure((IntPtr)ptr, typeof(LinkedMem));
+                    // read shared memory block, copy into buffer
+                    var buffer = new byte[_FileStream.Length];
+                    _FileStream.Read(buffer, 0, buffer.Length);
+
+                    fixed (byte* ptr = &buffer[0])
+                    {
+                        Data = (LinkedMem)Marshal.PtrToStructure((IntPtr)ptr, typeof(LinkedMem));
+                    }
                 }
             }
+            
         }
 
         private void UpdateWiaThread()
