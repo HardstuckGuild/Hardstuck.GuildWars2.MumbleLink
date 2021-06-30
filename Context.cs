@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace Hardstuck.GuildWars2.MumbleLink
 {
@@ -22,8 +21,8 @@ namespace Hardstuck.GuildWars2.MumbleLink
         public ushort CompassWidth { get; set; }
         public ushort CompassHeight { get; set; }
         public float CompassRotation { get; set; }
-        public Vector2 PlayerCoordinates { get; set; }
-        public Vector2 MapCenterCoordinates { get; set; }
+        public Vector2D PlayerCoordinates { get; set; }
+        public Vector2D MapCenterCoordinates { get; set; }
         public float MapScale { get; set; }
         public uint ProcessID { get; set; }
         public Mounts MountIndex { get; set; }

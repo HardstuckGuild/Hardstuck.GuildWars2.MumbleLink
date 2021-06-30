@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace Hardstuck.GuildWars2.MumbleLink
 {
@@ -9,9 +8,9 @@ namespace Hardstuck.GuildWars2.MumbleLink
         public uint UIVersion { get; set; }
         public uint UITick { get; set; }
 
-        public Vector3 AvatarPosition { get; set; }
-        public Vector3 AvatarFront { get; set; }
-        public Vector3 AvatarTop { get; set; }
+        public Vector3D AvatarPosition { get; set; }
+        public Vector3D AvatarFront { get; set; }
+        public Vector3D AvatarTop { get; set; }
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
         private string _Name;
@@ -21,9 +20,9 @@ namespace Hardstuck.GuildWars2.MumbleLink
             set => _Name = value;
         }
 
-        public Vector3 CameraPosition { get; set; }
-        public Vector3 CameraFront { get; set; }
-        public Vector3 CameraTop { get; set; }
+        public Vector3D CameraPosition { get; set; }
+        public Vector3D CameraFront { get; set; }
+        public Vector3D CameraTop { get; set; }
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
         private string _Identity;
