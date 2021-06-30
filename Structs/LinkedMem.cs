@@ -38,6 +38,9 @@ namespace Hardstuck.GuildWars2.MumbleLink
             set => _IdentityString = value;
         }
 
+        /// <summary>
+        /// The character's identity
+        /// </summary>
         public Identity Identity => JsonConvert.DeserializeObject<Identity>(_IdentityString);
 
         public uint ContextLength { get; set; }

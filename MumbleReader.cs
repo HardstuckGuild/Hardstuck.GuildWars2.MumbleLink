@@ -5,6 +5,9 @@ using System.Threading;
 
 namespace Hardstuck.GuildWars2.MumbleLink
 {
+    /// <summary>
+    /// Main class from the package, implements IDisposable.
+    /// </summary>
     public class MumbleReader : IDisposable
     {
         private bool _Disposed = false;
@@ -13,7 +16,9 @@ namespace Hardstuck.GuildWars2.MumbleLink
         private readonly MemoryMappedViewStream _FileStream;
         private readonly Thread updateLoop;
 
-        public int Tick { get; set; } = 0;
+        /// <summary>
+        /// The update rate for the continuous update.
+        /// </summary>
         public int UpdateRate
         {
             get => _UpdateRate;
@@ -29,8 +34,17 @@ namespace Hardstuck.GuildWars2.MumbleLink
                 }
             }
         }
+
+        /// <summary>
+        /// Data optained from the MumbleLink
+        /// </summary>
         public LinkedMem Data { get; set; }
 
+        /// <summary>
+        /// Create an instance from MumbleReader class.
+        /// </summary>
+        /// <param name="continuousUpdate">Continuosly update the data</param>
+        /// <param name="mapName">name for the memory map</param>
         public MumbleReader(bool continuousUpdate = true, string mapName = "MumbleLink")
         {
             _File = MemoryMappedFile.CreateOrOpen(mapName, Marshal.SizeOf<LinkedMem>());
@@ -43,12 +57,19 @@ namespace Hardstuck.GuildWars2.MumbleLink
             }
         }
 
+        /// <summary>
+        /// Dispose of all resources held by the class.
+        /// </summary>
         public void Dispose()
         {
             DisposeFlow(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose of resources held by the class.
+        /// </summary>
+        /// <param name="disposing">whether the dispose should happen</param>
         protected virtual void DisposeFlow(bool disposing)
         {
             if (_Disposed)
@@ -66,6 +87,9 @@ namespace Hardstuck.GuildWars2.MumbleLink
             }
         }
 
+        /// <summary>
+        /// Update the Mumble Link data manually.
+        /// </summary>
         public void Update()
         {
             unsafe
@@ -85,8 +109,6 @@ namespace Hardstuck.GuildWars2.MumbleLink
         {
             while (!_Disposed)
             {
-                Tick++;
-
                 _FileStream.Position = 0; // reset read position
 
                 unsafe
