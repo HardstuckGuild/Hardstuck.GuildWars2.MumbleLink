@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using Newtonsoft.Json;
 
 namespace Hardstuck.GuildWars2.MumbleLink
 {
@@ -6,10 +7,13 @@ namespace Hardstuck.GuildWars2.MumbleLink
     public struct LinkedMem
     {
         public uint UIVersion { get; set; }
+
         public uint UITick { get; set; }
 
         public Vector3D AvatarPosition { get; set; }
+
         public Vector3D AvatarFront { get; set; }
+
         public Vector3D AvatarTop { get; set; }
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
@@ -21,20 +25,28 @@ namespace Hardstuck.GuildWars2.MumbleLink
         }
 
         public Vector3D CameraPosition { get; set; }
+
         public Vector3D CameraFront { get; set; }
+
         public Vector3D CameraTop { get; set; }
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-        private string _Identity;
-        public string Identity
+        private string _IdentityString;
+        public string IdentityString
         {
-            get => _Identity;
-            set => _Identity = value;
+            get => _IdentityString;
+            set => _IdentityString = value;
         }
+
+        public Identity Identity => JsonConvert.DeserializeObject<Identity>(_IdentityString);
+
         public uint ContextLength { get; set; }
+
         public Context Context { get; set; }
+
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 2048)]
         private string _Description;
+
         public string Description
         {
             get => _Description;

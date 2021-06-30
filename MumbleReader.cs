@@ -5,30 +5,51 @@ using System.Threading;
 
 namespace Hardstuck.GuildWars2.MumbleLink
 {
-    public class MumbleLink : IDisposable
+    public class MumbleReader : IDisposable
     {
-        private bool _Disposed;
+        private bool _Disposed = false;
+        private int _UpdateRate = 16;
         private readonly MemoryMappedFile _File;
         private readonly MemoryMappedViewStream _FileStream;
+        private readonly Thread updateLoop;
 
         public int Tick { get; set; } = 0;
-        public int UpdateRate { get; set; } = 16;
+        public int UpdateRate
+        {
+            get => _UpdateRate;
+            set
+            {
+                if (value > 0)
+                {
+                    _UpdateRate = value;
+                }
+                else
+                {
+                    _UpdateRate = 16;
+                }
+            }
+        }
         public LinkedMem Data { get; set; }
 
-        public MumbleLink(string mapName)
+        public MumbleReader(bool continuousUpdate = true, string mapName = "MumbleLink")
         {
             _File = MemoryMappedFile.CreateOrOpen(mapName, Marshal.SizeOf<LinkedMem>());
             _FileStream = _File.CreateViewStream();
 
-            Thread loop = new Thread(Update);
-            loop.Start();
+            if (continuousUpdate)
+            {
+                updateLoop = new Thread(UpdateWiaThread);
+                updateLoop.Start();
+            }
         }
+
         public void Dispose()
         {
-            Dispose(true);
+            DisposeFlow(true);
             GC.SuppressFinalize(this);
         }
-        protected virtual void Dispose(bool disposing)
+
+        protected virtual void DisposeFlow(bool disposing)
         {
             if (_Disposed)
             {
@@ -39,12 +60,28 @@ namespace Hardstuck.GuildWars2.MumbleLink
 
             if (disposing)
             {
-                _FileStream.Dispose();
-                _File.Dispose();
+                _FileStream?.Dispose();
+                _File?.Dispose();
+                updateLoop?.Abort();
             }
         }
 
-        private void Update()
+        public void Update()
+        {
+            unsafe
+            {
+                // read shared memory block, copy into buffer
+                var buffer = new byte[_FileStream.Length];
+                _FileStream.Read(buffer, 0, buffer.Length);
+
+                fixed (byte* ptr = &buffer[0])
+                {
+                    Data = (LinkedMem)Marshal.PtrToStructure((IntPtr)ptr, typeof(LinkedMem));
+                }
+            }
+        }
+
+        private void UpdateWiaThread()
         {
             while (!_Disposed)
             {
@@ -55,7 +92,7 @@ namespace Hardstuck.GuildWars2.MumbleLink
                 unsafe
                 {
                     // read shared memory block, copy into buffer
-                    byte[] buffer = new byte[_FileStream.Length];
+                    var buffer = new byte[_FileStream.Length];
                     _FileStream.Read(buffer, 0, buffer.Length);
 
                     fixed (byte* ptr = &buffer[0])
