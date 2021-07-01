@@ -47,6 +47,10 @@ namespace Hardstuck.GuildWars2.MumbleLink
                 {
                     return GameMode.WvW;
                 }
+                if (UIState.HasFlag(UIState.IsInCompetitiveGamemode))
+                {
+                    return GameMode.PvP;
+                }
                 return GameMode.PvE;
             }
         }
