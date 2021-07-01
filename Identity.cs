@@ -23,7 +23,7 @@ namespace Hardstuck.GuildWars2.MumbleLink
         /// Specialisation of the character
         /// </summary>
         [JsonProperty("spec")]
-        public EliteSpecialization Specialization { get; set; }
+        public EliteSpecialisation Specialisation { get; set; }
 
         /// <summary>
         /// Race of the character

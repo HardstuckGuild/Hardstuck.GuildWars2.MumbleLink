@@ -32,22 +32,22 @@ namespace Hardstuck.GuildWars2.MumbleLink
         /// <summary>
         /// Current gamemode, resolved from map type
         /// </summary>
-        public MapGameMode GameMode
+        public GameMode GameMode
         {
             get
             {
                 if (MapType == MapType.PvP || MapType == MapType.Tournament)
                 {
-                    return MapGameMode.PvP;
+                    return GameMode.PvP;
                 }
                 if (MapType == MapType.WvW || MapType == MapType.WvW_BBL
                     || MapType == MapType.WvW_EBG || MapType == MapType.WvW_EotM
                     || MapType == MapType.WvW_GBL || MapType == MapType.WvW_Lounge
                     || MapType == MapType.WvW_OS || MapType == MapType.WvW_RBL)
                 {
-                    return MapGameMode.WvW;
+                    return GameMode.WvW;
                 }
-                return MapGameMode.PvE;
+                return GameMode.PvE;
             }
         }
 
