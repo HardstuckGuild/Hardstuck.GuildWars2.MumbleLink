@@ -83,7 +83,6 @@ namespace Hardstuck.GuildWars2.MumbleLink
             {
                 _FileStream?.Dispose();
                 _File?.Dispose();
-                updateLoop?.Abort();
             }
         }
 
