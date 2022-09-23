@@ -10,11 +10,13 @@ namespace Hardstuck.GuildWars2.MumbleLink
     /// </summary>
     public class MumbleReader : IDisposable
     {
+        #region definitions
         private bool _Disposed = false;
         private int _UpdateRate = 16;
         private readonly MemoryMappedFile _File;
         private readonly MemoryMappedViewStream _FileStream;
         private readonly Thread updateLoop;
+        #endregion
 
         /// <summary>
         /// The update rate for the continuous update.

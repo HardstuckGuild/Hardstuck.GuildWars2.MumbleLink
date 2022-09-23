@@ -5,7 +5,7 @@ namespace Hardstuck.GuildWars2.MumbleLink
     /// <summary>
     /// Mumble Link Identity class
     /// </summary>
-    public class Identity
+    public sealed class Identity
     {
         /// <summary>
         /// Character name
