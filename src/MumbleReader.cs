@@ -8,7 +8,7 @@ namespace Hardstuck.GuildWars2.MumbleLink
     /// <summary>
     /// Main class from the package, implements IDisposable.
     /// </summary>
-    public class MumbleReader : IDisposable
+    public sealed class MumbleReader : IDisposable
     {
         #region definitions
         private bool _Disposed = false;
@@ -38,7 +38,7 @@ namespace Hardstuck.GuildWars2.MumbleLink
         }
 
         /// <summary>
-        /// Data optained from the MumbleLink
+        /// Data obtained from the MumbleLink
         /// </summary>
         public LinkedMem Data { get; set; }
 
@@ -54,7 +54,7 @@ namespace Hardstuck.GuildWars2.MumbleLink
 
             if (continuousUpdate)
             {
-                updateLoop = new Thread(UpdateWiaThread);
+                updateLoop = new Thread(UpdateViaThread);
                 updateLoop.Start();
             }
         }
@@ -72,7 +72,7 @@ namespace Hardstuck.GuildWars2.MumbleLink
         /// Dispose of resources held by the class.
         /// </summary>
         /// <param name="disposing">whether the dispose should happen</param>
-        protected virtual void DisposeFlow(bool disposing)
+        private void DisposeFlow(bool disposing)
         {
             if (_Disposed)
             {
@@ -85,6 +85,7 @@ namespace Hardstuck.GuildWars2.MumbleLink
             {
                 _FileStream?.Dispose();
                 _File?.Dispose();
+                updateLoop?.Join();
             }
         }
 
@@ -112,7 +113,7 @@ namespace Hardstuck.GuildWars2.MumbleLink
             
         }
 
-        private void UpdateWiaThread()
+        private void UpdateViaThread()
         {
             while (!_Disposed)
             {

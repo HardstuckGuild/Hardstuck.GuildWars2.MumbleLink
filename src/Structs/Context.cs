@@ -111,7 +111,7 @@ namespace Hardstuck.GuildWars2.MumbleLink
         public uint ProcessID { get; set; }
 
         /// <summary>
-        /// Indicates, whether character is currently mounted
+        /// Indicates, the character mount state, whether it is mounted and on which mount
         /// </summary>
         public Mounts MountIndex { get; set; }
     }
