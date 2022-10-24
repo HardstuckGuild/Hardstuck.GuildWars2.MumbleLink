@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Hardstuck.GuildWars2.MumbleLink
 {
@@ -10,61 +10,61 @@ namespace Hardstuck.GuildWars2.MumbleLink
         /// <summary>
         /// Character name
         /// </summary>
-        [JsonPropertyName("name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Profession of the character
         /// </summary>
-        [JsonPropertyName("profession")]
+        [JsonProperty("profession")]
         public Profession Profession { get; set; }
 
         /// <summary>
         /// Specialisation of the character
         /// </summary>
-        [JsonPropertyName("spec")]
+        [JsonProperty("spec")]
         public EliteSpecialisation Specialisation { get; set; }
 
         /// <summary>
         /// Race of the character
         /// </summary>
-        [JsonPropertyName("race")]
+        [JsonProperty("race")]
         public Race Race { get; set; }
 
         /// <summary>
         /// ID of the current map
         /// </summary>
-        [JsonPropertyName("map_id")]
+        [JsonProperty("map_id")]
         public uint MapID { get; set; }
 
         /// <summary>
         /// ID of the server
         /// </summary>
-        [JsonPropertyName("world_id")]
+        [JsonProperty("world_id")]
         public uint WorldID { get; set; }
 
         /// <summary>
         /// (PvP) Team colour
         /// </summary>
-        [JsonPropertyName("team_color_id")]
+        [JsonProperty("team_color_id")]
         public uint TeamColorID { get; set; }
 
         /// <summary>
         /// Whether is character an active commander
         /// </summary>
-        [JsonPropertyName("commander")]
+        [JsonProperty("commander")]
         public bool IsCommander { get; set; }
 
         /// <summary>
         /// Current setting for FOV
         /// </summary>
-        [JsonPropertyName("fov")]
+        [JsonProperty("fov")]
         public float FOV { get; set; }
 
         /// <summary>
         /// Current setting for the UI size
         /// </summary>
-        [JsonPropertyName("uisz")]
+        [JsonProperty("uisz")]
         public UISize UISize { get; set; }
     }
 }
