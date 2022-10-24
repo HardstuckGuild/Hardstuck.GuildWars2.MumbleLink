@@ -110,7 +110,6 @@ namespace Hardstuck.GuildWars2.MumbleLink
                     }
                 }
             }
-            
         }
 
         private void UpdateViaThread()

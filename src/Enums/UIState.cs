@@ -9,6 +9,11 @@ namespace Hardstuck.GuildWars2.MumbleLink
     public enum UIState : uint
     {
         /// <summary>
+        /// No state specified
+        /// </summary>
+        NoState = 0,
+
+        /// <summary>
         /// Whether map is opened
         /// </summary>
         IsMapOpen = 1,
