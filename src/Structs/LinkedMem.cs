@@ -1,5 +1,5 @@
 ﻿using System.Runtime.InteropServices;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Hardstuck.GuildWars2.MumbleLink
 {
@@ -74,7 +74,20 @@ namespace Hardstuck.GuildWars2.MumbleLink
         /// <summary>
         /// The character's identity
         /// </summary>
-        public Identity Identity => JsonConvert.DeserializeObject<Identity>(_IdentityString);
+        public Identity Identity
+        {
+            get
+            {
+                try
+                {
+                    return JsonSerializer.Deserialize<Identity>(_IdentityString);
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
 
         /// <summary>
         /// Character length of the context
